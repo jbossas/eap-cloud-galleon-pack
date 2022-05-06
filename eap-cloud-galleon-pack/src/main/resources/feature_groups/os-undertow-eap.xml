@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Once we get rid-off of WildFly s2i v1, this feature-group can be moved to wildfly-cekit-modules for sharing -->
+<feature-group-spec name="os-undertow-eap" xmlns="urn:jboss:galleon:feature-group:1.0">
+    <feature spec="socket-binding-group.socket-binding">
+        <param name="socket-binding-group" value="standard-sockets" />
+        <param name="socket-binding" value="http"/>
+        <param name="interface" value="bindall"/>
+    </feature>
+    <feature spec="socket-binding-group.socket-binding">
+        <param name="socket-binding-group" value="standard-sockets" />
+        <param name="socket-binding" value="https"/>
+        <param name="interface" value="bindall"/>
+    </feature>
+</feature-group-spec>

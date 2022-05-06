@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2022, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>37</version>
+    </parent>
+    <groupId>org.jboss.eap.cloud</groupId>
+    <artifactId>eap-cloud-galleon-pack-parent</artifactId>
+    <version>1.0.0.Beta-redhat-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Galleon feature-pack for EAP 8 on the Cloud parent</name>
+  
+    <description>Galleon feature-pack for EAP 8 on the Cloud parent.</description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <properties>
+        <wildfly.cekit.modules.fork>wildfly</wildfly.cekit.modules.fork>
+        <wildfly.cekit.modules.tag>main</wildfly.cekit.modules.tag>
+        <version.junit>4.13.2</version.junit>
+        <!-- version from a test release to unzip in local maven cache -->
+        <version.org.eap>8.0.0.Beta-redhat-20220408</version.org.eap>
+        <!-- should be 19.0.0.Final-redhat-20220408 but is not present in the test release maven repo -->
+        <version.org.wildfly.core>18.0.1.Final-redhat-SNAPSHOT</version.org.wildfly.core>
+        <version.org.wildfly.galleon-plugins>5.2.11.Final</version.org.wildfly.galleon-plugins>
+        <version.org.jboss.eap.maven.plugin>1.0.0.Beta-redhat-SNAPSHOT</version.org.jboss.eap.maven.plugin>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.eap</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <version>${version.org.eap}</version>
+                <type>zip</type>
+            </dependency>
+            <!-- tests -->
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-core-test-runner</artifactId>
+                <version>${version.org.wildfly.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-controller-client</artifactId>
+                <version>${version.org.wildfly.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jboss.eap.plugins</groupId>
+                    <artifactId>eap-maven-plugin</artifactId>
+                    <version>${version.org.jboss.eap.maven.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.galleon-plugins</groupId>
+                    <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                    <version>${version.org.wildfly.galleon-plugins}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules>
+        <module>testsuite</module>
+        <module>eap-cloud-galleon-pack</module>
+    </modules>
+</project>
