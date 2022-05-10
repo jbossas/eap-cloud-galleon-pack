@@ -1,0 +1,16 @@
+admin/2.0
+access-log-valve
+datasources
+deployment-scanner
+elytron
+extensions
+filters
+jgroups
+json-logging
+keycloak/2.0
+logger-category
+oidc
+os/node-name
+port-offset
+resource-adapters
+statefulset
