@@ -9,6 +9,7 @@ jgroups
 json-logging
 keycloak/2.0
 logger-category
+messaging/2.0
 oidc
 os/node-name
 port-offset
