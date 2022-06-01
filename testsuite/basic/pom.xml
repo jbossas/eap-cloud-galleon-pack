@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.jboss.eap.cloud</groupId>
         <artifactId>eap-cloud-galleon-pack-testsuite-parent</artifactId>
-        <version>1.0.0.Alpha2-redhat-SNAPSHOT</version>
+        <version>1.0.0.Alpha3-redhat-SNAPSHOT</version>
     </parent>
     <artifactId>eap-cloud-galleon-pack-basic-testsuite</artifactId>
     <name>Galleon feature-pack for EAP 8 on the Cloud basic testsuite</name>
