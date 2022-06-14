@@ -74,6 +74,14 @@ Configures the admin user used to access the management interface.
 
 [Environment variables.](https://github.com/wildfly/wildfly-cekit-modules/blob/main/jboss/container/wildfly/launch/admin/2.0/module.yaml)
 
+# Messaging
+
+Add Topics and Queues to messaging configuration.
+
+## Environment variables
+
+[Environment variables.](https://github.com/wildfly/wildfly-cekit-modules/blob/main/jboss/container/wildfly/launch/messaging/2.0/module.yaml)
+
 # Resource Adapters
 
 Add resource adapters to the resource-adapters subsystem.
