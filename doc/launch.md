@@ -58,6 +58,14 @@ Enable JSON-formatted logging.
 
 [Environment variables.](https://github.com/wildfly/wildfly-cekit-modules/blob/main/jboss/container/wildfly/launch/json-logging/module.yaml)
 
+#Keycloak SAML adapter
+
+Configures keycloak-smal subsystem with deployments secured with SAML protocol
+
+## Environment variables
+
+[Environment variables.](https://github.com/wildfly/wildfly-cekit-modules/blob/main/jboss/container/wildfly/launch/keycloak/2.0/module.yaml)
+
 # Logging loggers
 
 Add loggers to the logging subsystem.
