@@ -17,6 +17,7 @@
         <layer name="jms-activemq"/>
         <layer name="resource-adapters"/>
         <!-- end cloud server -->
+        <layer name="elytron-oidc-client"/>
         <layer name="h2-driver"/>
         <layer name="health"/>
         <layer name="jdr"/>
