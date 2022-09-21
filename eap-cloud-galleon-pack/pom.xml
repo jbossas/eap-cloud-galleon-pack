@@ -94,6 +94,8 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
+                            <generate-channel>true</generate-channel>
+                            <add-feature-packs-as-required-channels>false</add-feature-packs-as-required-channels>
                         </configuration>
                     </execution>
                 </executions>
