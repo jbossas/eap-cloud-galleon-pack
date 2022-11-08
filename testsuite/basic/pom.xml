@@ -78,7 +78,7 @@
                                 <feature-pack>
                                     <groupId>org.jboss.eap</groupId>
                                     <artifactId>wildfly-ee-galleon-pack</artifactId>
-                                    <version>${version.org.eap}</version>
+                                    <version>${version.org.jboss.eap}</version>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>${project.groupId}</groupId>
