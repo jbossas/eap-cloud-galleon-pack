@@ -42,7 +42,7 @@
     <properties>
         <wildfly.cekit.modules.fork>wildfly</wildfly.cekit.modules.fork>
         <!-- next tag should come from 0.27.13.x wildfly-cekit branch -->
-        <wildfly.cekit.modules.tag>0.27.13.1</wildfly.cekit.modules.tag>
+        <wildfly.cekit.modules.tag>0.27.13.2</wildfly.cekit.modules.tag>
         <version.junit>4.13.2</version.junit>
         <version.org.jboss.eap>8.0.0.Beta-redhat-00003</version.org.jboss.eap>
         <version.org.wildfly.core>19.0.0.Beta16-redhat-00004</version.org.wildfly.core>
