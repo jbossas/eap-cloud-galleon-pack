@@ -44,10 +44,10 @@
         <wildfly.cekit.modules.tag>0.27.15</wildfly.cekit.modules.tag>
         <version.junit>4.13.2</version.junit>
         <version.inject>1</version.inject>
-        <version.org.jboss.eap>8.0.0.Beta-redhat-00003</version.org.jboss.eap>
-        <version.org.wildfly.core>20.0.0.Beta6</version.org.wildfly.core>
-        <version.org.wildfly.galleon-plugins>6.3.2.Final</version.org.wildfly.galleon-plugins>
-        <version.org.jboss.eap.maven.plugin>1.0.0.Beta7-redhat-00001</version.org.jboss.eap.maven.plugin>
+        <version.org.jboss.eap>8.0.0.GA-redhat-SNAPSHOT</version.org.jboss.eap>
+        <version.org.wildfly.core>20.0.0.Final</version.org.wildfly.core>
+        <version.org.wildfly.galleon-plugins>6.4.0.Final-redhat-00001</version.org.wildfly.galleon-plugins>
+        <version.org.jboss.eap.maven.plugin>1.0.0.Beta9-redhat-00001</version.org.jboss.eap.maven.plugin>
     </properties>
 
     <dependencyManagement>

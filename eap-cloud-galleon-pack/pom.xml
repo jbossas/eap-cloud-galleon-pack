@@ -94,6 +94,7 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
+                            <wildfly-channel-resolution-mode>REQUIRED</wildfly-channel-resolution-mode>
                             <generate-channel-manifest>true</generate-channel-manifest>
                             <add-feature-packs-as-required-manifests>false</add-feature-packs-as-required-manifests>
                         </configuration>

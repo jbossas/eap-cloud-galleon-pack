@@ -26,6 +26,8 @@ CONFIG_SCRIPT_CANDIDATES=(
   /opt/run-java/proxy-options
   $JBOSS_HOME/bin/launch/jboss_modules_system_pkgs.sh
   $JBOSS_HOME/bin/launch/statefulset.sh
+  # Allow for FP extending this one to add more launch scripts.
+  # EXTRA_LAUNCH_SCRIPTS_MARKER
 )
 
 # Notice that the value of this variable must be aligned with the value configured in assemble
