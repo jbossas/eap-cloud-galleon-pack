@@ -46,7 +46,7 @@
         <version.inject>1</version.inject>
         <version.org.jboss.eap>8.0.0.GA-redhat-SNAPSHOT</version.org.jboss.eap>
         <version.org.wildfly.core>21.0.3.Final-redhat-00001</version.org.wildfly.core>
-        <version.org.wildfly.galleon-plugins>6.4.7.Final-redhat-00001</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.galleon-plugins>6.4.8.Final-redhat-00001</version.org.wildfly.galleon-plugins>
         <version.org.jboss.eap.maven.plugin>1.0.0.Final-redhat-00001</version.org.jboss.eap.maven.plugin>
     </properties>
 
