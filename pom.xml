@@ -25,11 +25,11 @@
     </parent>
     <groupId>org.jboss.eap.cloud</groupId>
     <artifactId>eap-cloud-galleon-pack-parent</artifactId>
-    <version>1.0.0.Final-redhat-SNAPSHOT</version>
+    <version>2.0.0.Final-redhat-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Galleon feature-pack for EAP 8 on the Cloud parent</name>
+    <name>Galleon feature-pack for EAP 8.1 on the Cloud parent</name>
   
-    <description>Galleon feature-pack for EAP 8 on the Cloud parent.</description>
+    <description>Galleon feature-pack for EAP 8.1 on the Cloud parent.</description>
 
     <licenses>
         <license>
