@@ -1,7 +1,11 @@
 #!/bin/sh
 # Openshift WildFly runtime configuration update
 # Centralised configuration file to set variables that affect the launch scripts in wildfly-cekit-modules.
-
+if [ -f "${JBOSS_CONTAINER_JAVA_PROXY_MODULE}/proxy-options" ]; then
+  local_proxy_options="${JBOSS_CONTAINER_JAVA_PROXY_MODULE}"/proxy-options
+else
+  local_proxy_options="/opt/run-java/proxy-options"
+fi
 # Scripts that 
 # wildfly-cekit-modules will look for each of the listed files and run them if they exist.
 CONFIG_SCRIPT_CANDIDATES=(
@@ -23,7 +27,7 @@ CONFIG_SCRIPT_CANDIDATES=(
   $JBOSS_HOME/bin/launch/oidc.sh
   $JBOSS_HOME/bin/launch/ports.sh
   $JBOSS_HOME/bin/launch/resource-adapter.sh
-  /opt/run-java/proxy-options
+  $local_proxy_options
   $JBOSS_HOME/bin/launch/jboss_modules_system_pkgs.sh
   $JBOSS_HOME/bin/launch/statefulset.sh
   # Allow for FP extending this one to add more launch scripts.
