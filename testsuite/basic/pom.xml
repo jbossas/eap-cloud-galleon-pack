@@ -22,10 +22,10 @@
     <parent>
         <groupId>org.jboss.eap.cloud</groupId>
         <artifactId>eap-cloud-galleon-pack-testsuite-parent</artifactId>
-        <version>1.0.0.Final-redhat-SNAPSHOT</version>
+        <version>2.0.0.Final-redhat-SNAPSHOT</version>
     </parent>
     <artifactId>eap-cloud-galleon-pack-basic-testsuite</artifactId>
-    <name>Galleon feature-pack for EAP 8 on the Cloud basic testsuite</name>
+    <name>Galleon feature-pack for EAP 8.1 on the Cloud basic testsuite</name>
     <description>Simply validate that the server can be provisioned and started (with bare-metal launcher)</description>
 
     <dependencies>
@@ -79,16 +79,30 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
+                            <channels>
+                                <channel>
+                                <manifest>
+                                    <groupId>org.jboss.eap</groupId>
+                                    <artifactId>wildfly-ee-galleon-pack</artifactId>
+                                    <version>${version.org.jboss.eap}</version>
+                                </manifest>
+                                </channel>
+                                <channel>
+                                <manifest>
+                                    <groupId>org.jboss.eap.cloud</groupId>
+                                    <artifactId>eap-cloud-galleon-pack</artifactId>
+                                    <version>${project.version}</version>
+                                </manifest>
+                                </channel>
+                            </channels>
                             <feature-packs>
                                 <feature-pack>
                                     <groupId>org.jboss.eap</groupId>
                                     <artifactId>wildfly-ee-galleon-pack</artifactId>
-                                    <version>${version.org.jboss.eap}</version>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>eap-cloud-galleon-pack</artifactId>
-                                    <version>${project.version}</version>
                                 </feature-pack>
                             </feature-packs>
                         </configuration>
