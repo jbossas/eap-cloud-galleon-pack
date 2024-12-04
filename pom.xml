@@ -44,9 +44,9 @@
         <wildfly.cekit.modules.tag>0.33.0</wildfly.cekit.modules.tag>
         <version.junit>4.13.2</version.junit>
         <version.inject>1</version.inject>
-        <version.org.jboss.eap>8.0.7.GA-redhat-SNAPSHOT</version.org.jboss.eap>
-        <version.org.wildfly.core>21.0.3.Final-redhat-00001</version.org.wildfly.core>
-        <version.org.wildfly.galleon-plugins>7.1.0.Final</version.org.wildfly.galleon-plugins>
+        <version.org.jboss.eap>8.0.5.GA-redhat-00001</version.org.jboss.eap>
+        <version.org.wildfly.core>21.0.9.Final-redhat-00001</version.org.wildfly.core>
+        <version.org.wildfly.galleon-plugins>7.3.1.Final</version.org.wildfly.galleon-plugins>
         <version.org.jboss.eap.maven.plugin>2.0.0.Final-SNAPSHOT</version.org.jboss.eap.maven.plugin>
     </properties>
 
@@ -57,6 +57,12 @@
                 <artifactId>wildfly-ee-galleon-pack</artifactId>
                 <version>${version.org.jboss.eap}</version>
                 <type>zip</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- tests -->
             <dependency>

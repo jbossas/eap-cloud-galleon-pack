@@ -82,9 +82,8 @@
                             <channels>
                                 <channel>
                                 <manifest>
-                                    <groupId>org.jboss.eap</groupId>
-                                    <artifactId>wildfly-ee-galleon-pack</artifactId>
-                                    <version>${version.org.jboss.eap}</version>
+                                    <groupId>org.jboss.eap.channels</groupId>
+                                    <artifactId>eap-8.0</artifactId>
                                 </manifest>
                                 </channel>
                                 <channel>
