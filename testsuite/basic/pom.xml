@@ -83,7 +83,7 @@
                                 <channel>
                                 <manifest>
                                     <groupId>org.jboss.eap.channels</groupId>
-                                    <artifactId>eap-8.0</artifactId>
+                                    <artifactId>eap-8.1</artifactId>
                                 </manifest>
                                 </channel>
                                 <channel>
@@ -104,6 +104,9 @@
                                     <artifactId>eap-cloud-galleon-pack</artifactId>
                                 </feature-pack>
                             </feature-packs>
+                            <layers>
+                                <layer>cloud-default-config</layer>
+                            </layers>
                         </configuration>
                     </execution>
                 </executions>
