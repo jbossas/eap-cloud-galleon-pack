@@ -41,7 +41,7 @@
     
     <properties>
         <wildfly.cekit.modules.fork>wildfly</wildfly.cekit.modules.fork>
-        <wildfly.cekit.modules.tag>0.35.0</wildfly.cekit.modules.tag>
+        <wildfly.cekit.modules.tag>0.35.1</wildfly.cekit.modules.tag>
         <version.junit>4.13.2</version.junit>
         <version.inject>1</version.inject>
         <version.org.jboss.eap>8.1.0.Beta-redhat-00001</version.org.jboss.eap>
