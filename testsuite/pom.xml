@@ -26,8 +26,8 @@
     </parent>
     <artifactId>eap-cloud-galleon-pack-testsuite-parent</artifactId>
     <packaging>pom</packaging>
-    <name>Galleon feature-pack for EAP 8.1 on the Cloud testsuite parent</name>
-    <description>Galleon feature-pack for EAP 8.1 on the Cloud testsuite parent</description>
+    <name>Galleon feature-pack for EAP 8 on the Cloud testsuite parent</name>
+    <description>Galleon feature-pack for EAP 8 on the Cloud testsuite parent</description>
 
     <properties>
         <management.address>${node0}</management.address>
