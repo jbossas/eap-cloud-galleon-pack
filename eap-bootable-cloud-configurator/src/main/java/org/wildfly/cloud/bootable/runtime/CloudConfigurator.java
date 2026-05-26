@@ -1,0 +1,179 @@
+/*
+ * Copyright The WildFly Authors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package org.wildfly.cloud.bootable.runtime;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.wildfly.core.jar.runtime.BootableServerConfigurator;
+import org.wildfly.core.jar.runtime.Configuration;
+/**
+ *
+ * @author jdenise
+ */
+public class CloudConfigurator implements BootableServerConfigurator {
+
+    private static final String OPENSHIFT_HOST_NAME_ENV = "HOSTNAME";
+    private static final String JBOSS_NODE_NAME_PROPERTY = "jboss.node.name";
+    private static final String JBOSS_TX_NODE_ID_PROPERTY = "jboss.tx.node.id";
+    private static final String JBOSS_MANAGEMENT_BIND_ADDRESS = "jboss.bind.address.management";
+    private static final String JBOSS_PRIVATE_BIND_ADDRESS = "jboss.bind.address.private";
+    private static final String JBOSS_PUBLIC_BIND_ADDRESS = "jboss.bind.address";
+    private static final String ALL_INTERFACES = "0.0.0.0";
+    private static final Path TMP_DIR = Paths.get("/tmp");
+    private static final Path JBOSS_CONTAINER_BOOTABLE_DIR = TMP_DIR.resolve("wildfly-bootable-jar");
+    private static final Path INSTALL_DIR_FILE = JBOSS_CONTAINER_BOOTABLE_DIR.resolve("install-dir");
+    private static final String SOCKET_BINDING_GROUP = "socket-binding-group";
+    private static final String STANDALONE_CONFIG = "standalone.xml";
+    private static final String STANDALONE = "standalone";
+    private static final String CONFIGURATION = "configuration";
+
+    @Override
+    public Configuration configure(List<String> args, Path installDir) throws Exception {
+        System.out.println("Booting with the cloud configurator");
+        String hostname = System.getenv(OPENSHIFT_HOST_NAME_ENV);
+        List<String> extraArguments = doBoot(args, installDir, hostname);
+        // Handle JGroup.
+        String passwordEnv = System.getenv("JGROUPS_CLUSTER_PASSWORD");
+        List<String> allCmds = new ArrayList<>();
+        List<String> cmds = JGroupsUtil.getProtocolCommands(installDir.resolve("standalone").
+                    resolve("configuration").resolve("standalone.xml"), passwordEnv != null);
+        allCmds.addAll(cmds);
+        // Port offset, the cloud FP sets it to 0, required by s2i launch port-offset script.
+        Path config = installDir.resolve(STANDALONE).resolve(CONFIGURATION).resolve(STANDALONE_CONFIG);
+        updatePortOffsetConfig(config);
+        return new Configuration(extraArguments, allCmds);
+    }
+
+    List<String> doBoot(List<String> args, Path installDir, String hostname) throws Exception {
+        // Required by Operator
+        if (Files.exists(TMP_DIR)) {
+            try {
+                if (!Files.exists(JBOSS_CONTAINER_BOOTABLE_DIR)) {
+                    Files.createDirectory(JBOSS_CONTAINER_BOOTABLE_DIR);
+                }
+                Files.write(INSTALL_DIR_FILE, installDir.toString().getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException ex) {
+                System.err.println("Warning, can't generate " + INSTALL_DIR_FILE + ". " + ex);
+            }
+        }
+        return handleCloud(args, installDir, hostname);
+    }
+
+    private static List<String> handleCloud(List<String> args, Path installDir, String hostname) throws Exception {
+
+        String nodeName = null;
+        boolean itfSet = false;
+        boolean privateSet = false;
+        boolean publicSet = false;
+        for (String arg : args) {
+            if (arg.startsWith("-D" + JBOSS_NODE_NAME_PROPERTY + "=")) {
+                int eq = arg.indexOf("=");
+                nodeName = arg.substring(eq + 1, arg.length());
+            } else {
+                if (arg.startsWith("-D" + JBOSS_MANAGEMENT_BIND_ADDRESS + "=" ) || arg.startsWith("-bmanagement=")) {
+                    itfSet = true;
+                } else if (arg.startsWith("-D" + JBOSS_PRIVATE_BIND_ADDRESS + "=" ) || arg.startsWith("-bprivate=")) {
+                    privateSet = true;
+                } else if (arg.startsWith("-D" + JBOSS_PUBLIC_BIND_ADDRESS + "=" ) || arg.startsWith("-b=")) {
+                    publicSet = true;
+                } 
+            }
+        }
+        List<String> extraArguments = new ArrayList<>();
+        if (nodeName == null) {
+            boolean setNodeName = true;
+            nodeName = System.getProperty(JBOSS_NODE_NAME_PROPERTY);
+            if (nodeName == null) {
+                nodeName = hostname;
+            } else {
+                setNodeName = false;
+            }
+            if (nodeName != null) {
+                String txId = trunkTxIdValue(nodeName);
+                if (setNodeName) {
+                    extraArguments.add("-D" + JBOSS_NODE_NAME_PROPERTY + "=" + nodeName);
+                }
+                extraArguments.add("-D" + JBOSS_TX_NODE_ID_PROPERTY + "=" + txId);
+            }
+        } else {
+            String txId = trunkTxIdValue(nodeName);
+            extraArguments.add("-D" + JBOSS_TX_NODE_ID_PROPERTY + "=" + txId);
+        }
+        if (!itfSet) {
+            // Management interface always listen on all interfaces
+            extraArguments.add("-D" + JBOSS_MANAGEMENT_BIND_ADDRESS + "=" + ALL_INTERFACES);
+        }
+        if (hostname != null) {
+            if (!publicSet) {
+                extraArguments.add("-D" + JBOSS_PUBLIC_BIND_ADDRESS + "=" + hostname);
+            }
+            if (!privateSet) {
+                extraArguments.add("-D" + JBOSS_PRIVATE_BIND_ADDRESS + "=" + hostname);
+            }
+        }
+        return extraArguments;
+    }
+
+    private static String trunkTxIdValue(String value) {
+        if (value.length() > 23) {
+            String originalValue = value;
+            StringBuilder builder = new StringBuilder();
+            char[] chars = value.toCharArray();
+            for (int i = 1; i <= 23; i++) {
+                char c = chars[value.length() - i];
+                builder.insert(0, c);
+            }
+            value = builder.toString();
+            System.out.println("The HOSTNAME env variable used to set "
+                    + JBOSS_TX_NODE_ID_PROPERTY + " is longer than 23 bytes. "
+                    + JBOSS_TX_NODE_ID_PROPERTY + " value was adjusted to 23 bytes long string "
+                    + value + " from the original value " + originalValue);
+        }
+        return value;
+    }
+
+    private static void updatePortOffsetConfig(Path configFile) throws Exception {
+        try (FileInputStream fileInputStream = new FileInputStream(configFile.toFile())) {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(fileInputStream);
+            Element root = document.getDocumentElement();
+
+            NodeList lst = root.getChildNodes();
+            for (int i = 0; i < lst.getLength(); i++) {
+                Node n = lst.item(i);
+                if (n instanceof Element) {
+                    if (SOCKET_BINDING_GROUP.equals(n.getNodeName())) {
+                        Element e = (Element) n;
+                        e.setAttribute("port-offset", "${jboss.socket.binding.port-offset:0}");
+                        break;
+                    }
+                }
+            }
+            TransformerFactory instance = TransformerFactory.newInstance();
+            Transformer transformer = instance.newTransformer();
+            StreamResult output = new StreamResult(configFile.toFile());
+            DOMSource input = new DOMSource(document);
+
+            transformer.transform(input, output);
+        }
+    }
+}

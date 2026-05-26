@@ -1,5 +1,8 @@
+bootable-runtime
+config
 finalize-script
 launch-common
 launch-openshift
+logging
 layers/base
 layers/clustering

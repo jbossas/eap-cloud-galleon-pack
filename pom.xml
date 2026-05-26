@@ -41,7 +41,7 @@
     
     <properties>
         <wildfly.cekit.modules.fork>wildfly</wildfly.cekit.modules.fork>
-        <wildfly.cekit.modules.tag>0.39.1.1</wildfly.cekit.modules.tag>
+        <wildfly.cekit.modules.tag>wildfly-cloud-9.1.0.Final</wildfly.cekit.modules.tag>
         <version.junit>4.13.2</version.junit>
         <version.inject>1</version.inject>
         <version.org.jboss.eap>8.2.0.Alpha-redhat-00005</version.org.jboss.eap>
@@ -63,6 +63,22 @@
                         <artifactId>*</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>eap-bootable-cloud-configurator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>eap-cloud-galleon-pack-shared</artifactId>
+              <version>${project.version}</version>
+              <type>pom</type>
+            </dependency>
+            <dependency>
+              <groupId>org.wildfly.core</groupId>
+              <artifactId>wildfly-jar-runtime</artifactId>
+              <version>${version.org.wildfly.core}</version>
             </dependency>
             <!-- tests -->
             <dependency>
@@ -128,6 +144,8 @@
 
     <modules>
         <module>testsuite</module>
+        <module>galleon-shared</module>
         <module>eap-cloud-galleon-pack</module>
+        <module>eap-bootable-cloud-configurator</module>
     </modules>
 </project>
