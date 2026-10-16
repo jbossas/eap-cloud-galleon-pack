@@ -100,6 +100,7 @@
                             <wildfly-channel-resolution-mode>REQUIRED</wildfly-channel-resolution-mode>
                             <generate-channel-manifest>true</generate-channel-manifest>
                             <add-feature-packs-as-required-manifests>false</add-feature-packs-as-required-manifests>
+                            <sbom-cpe-resolution-mode>SERVER_PRODUCT_CONF</sbom-cpe-resolution-mode>
                         </configuration>
                     </execution>
                 </executions>
